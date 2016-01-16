@@ -1,1 +1,4 @@
 amp/app/*
+webroot/www/*
+!webroot/www/index.php
+!webroot/www/favicon.ico

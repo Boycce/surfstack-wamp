@@ -21,7 +21,10 @@ if (is_file(__DIR__.'/../vendor/autoload.php'))
 // If you can read this from your web browser, PHP is not working correctly :-(
 // ****************************************************************************
 
-echo 'PHP is working'.nl2br(PHP_EOL);
+if (function_exists('apache_get_version')) echo apache_get_version() .' connected<br>';
+else echo 'Nginx connected<br>';
+
+echo 'PHP '. phpversion() .' is working<br>';
 
 // Attempt to connect to MySQL
 $mysqli = @new mysqli('127.0.0.1', 'root', '');
@@ -30,13 +33,13 @@ $mysqli = @new mysqli('127.0.0.1', 'root', '');
 if ($mysqli->connect_error)
 {
 	// Output failed
-	echo 'MySQL connection is NOT working with current credentials'.nl2br(PHP_EOL);
+	echo 'MySQL '. $mysqli->server_info .' not connected<br>';
 }
 // Else the MySQL connection was successful
 else
 {
 	// Output success
-	echo 'MySQL connection is successful'.nl2br(PHP_EOL);
+	echo 'MySQL '. $mysqli->server_info .' connected<br>';
 }
 
 try
@@ -45,14 +48,14 @@ try
     $connection = @new MongoClient('mongodb://127.0.0.1:27017');
     
     // Output success
-    echo 'MongoDB connection is successful'.nl2br(PHP_EOL);
+    echo 'MongoDB '.MongoClient::VERSION.' connected<br>';
 }
 catch (MongoConnectionException $e)
 {
     // Output failed
-    echo 'MongoDB connection is NOT working'.nl2br(PHP_EOL);
+    echo 'MongoDB '.MongoClient::VERSION.' not connected<br>';
 }
 
 echo nl2br(PHP_EOL);
-echo '<a href="/adminer.php">Click here to open Adminer for MySQL.</a>'.nl2br(PHP_EOL);
-echo '<a href="/genghis">Click here to open Genghis for MongoDB.</a>'.nl2br(PHP_EOL);
+echo '<a href="/x/adminer">Click here to open Adminer for MySQL.</a>'.nl2br(PHP_EOL);
+//echo '<a href="/x/genghis">Click here to open Genghis for MongoDB.</a>'.nl2br(PHP_EOL);
